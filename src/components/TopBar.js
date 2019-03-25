@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   Container,
   Icon,
@@ -7,7 +8,8 @@ import {
   Segment,
   Sidebar,
   Header,
-  Dropdown
+  Dropdown,
+  Visibility
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
@@ -58,7 +60,8 @@ const HomepageHeading = ({ mobile }) => {
 
 class DesktopContainer extends Component {
   state = { activeItem: "Home" };
-
+  hideFixedMenu = () => this.setState({ fixed: false });
+  showFixedMenu = () => this.setState({ fixed: true });
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
   };
@@ -81,52 +84,64 @@ class DesktopContainer extends Component {
   };
   render() {
     const { activeItem } = this.state;
-
+    const { fixed } = this.state;
     return (
       <React.Fragment>
         <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-          <Segment
-            textAlign="center"
-            style={{
-              padding: "1em 0em",
-              minHeight: activeItem === "Home" ? 250 : 0
-            }}
-            inverted
+          <Visibility
+            once={false}
+            onBottomPassed={this.showFixedMenu}
+            onBottomPassedReverse={this.hideFixedMenu}
           >
-            <Menu inverted pointing secondary size="large">
-              <Container>
-                {this.renderMenu(activeItem)}
-                <Dropdown text="Shopping" pointing className="link item">
-                  <Dropdown.Menu>
-                    <Dropdown.Header>Categories</Dropdown.Header>
-                    <Dropdown.Item>
-                      <Dropdown text="Clothing">
-                        <Dropdown.Menu>
-                          <Dropdown.Header>Mens</Dropdown.Header>
-                          <Dropdown.Item>Shirts</Dropdown.Item>
-                          <Dropdown.Item>Pants</Dropdown.Item>
-                          <Dropdown.Item>Jeans</Dropdown.Item>
-                          <Dropdown.Item>Shoes</Dropdown.Item>
-                          <Dropdown.Divider />
-                          <Dropdown.Header>Womens</Dropdown.Header>
-                          <Dropdown.Item>Dresses</Dropdown.Item>
-                          <Dropdown.Item>Shoes</Dropdown.Item>
-                          <Dropdown.Item>Bags</Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </Dropdown.Item>
-                    <Dropdown.Item>Home Goods</Dropdown.Item>
-                    <Dropdown.Item>Bedroom</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Header>Order</Dropdown.Header>
-                    <Dropdown.Item>Status</Dropdown.Item>
-                    <Dropdown.Item>Cancellations</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Container>
-            </Menu>
-            {activeItem === "Home" ? <HomepageHeading /> : null}
-          </Segment>
+            <Segment
+              textAlign="center"
+              style={{
+                padding: "1em 0em",
+                minHeight: activeItem === "Home" ? 250 : 0
+              }}
+              inverted
+            >
+              <Menu
+                fixed={fixed ? "top" : null}
+                inverted={!fixed}
+                pointing={!fixed}
+                secondary={!fixed}
+                size="large"
+              >
+                <Container>
+                  {this.renderMenu(activeItem)}
+                  <Dropdown text="Shopping" pointing className="link item">
+                    <Dropdown.Menu>
+                      <Dropdown.Header>Categories</Dropdown.Header>
+                      <Dropdown.Item>
+                        <Dropdown text="Clothing">
+                          <Dropdown.Menu>
+                            <Dropdown.Header>Mens</Dropdown.Header>
+                            <Dropdown.Item>Shirts</Dropdown.Item>
+                            <Dropdown.Item>Pants</Dropdown.Item>
+                            <Dropdown.Item>Jeans</Dropdown.Item>
+                            <Dropdown.Item>Shoes</Dropdown.Item>
+                            <Dropdown.Divider />
+                            <Dropdown.Header>Womens</Dropdown.Header>
+                            <Dropdown.Item>Dresses</Dropdown.Item>
+                            <Dropdown.Item>Shoes</Dropdown.Item>
+                            <Dropdown.Item>Bags</Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </Dropdown.Item>
+                      <Dropdown.Item>Home Goods</Dropdown.Item>
+                      <Dropdown.Item>Bedroom</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Header>Order</Dropdown.Header>
+                      <Dropdown.Item>Status</Dropdown.Item>
+                      <Dropdown.Item>Cancellations</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Container>
+              </Menu>
+              {activeItem === "Home" ? <HomepageHeading /> : null}
+            </Segment>
+          </Visibility>
         </Responsive>
       </React.Fragment>
     );
@@ -171,6 +186,7 @@ class MobileContainer extends Component {
   render() {
     const { sidebarOpened } = this.state;
     const { activeItem } = this.state;
+    const { children } = this.props;
     return (
       <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
         <Sidebar.Pushable>
@@ -237,12 +253,16 @@ class MobileContainer extends Component {
                 <OtherHeading text={activeItem} />
               )}
             </Segment>
+            {children}
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </Responsive>
     );
   }
 }
+MobileContainer.propTypes = {
+  children: PropTypes.node
+};
 //style={{
 //padding: "1em 0em",
 //minHeight: activeItem === "Home" ? 250 : 0
@@ -255,8 +275,7 @@ const ResponsiveContainer = ({ children }) => (
 );
 class TopBar extends Component {
   render() {
-    console.log(this.props.name);
-    return <ResponsiveContainer />;
+    return <ResponsiveContainer>asd</ResponsiveContainer>;
   }
 }
 

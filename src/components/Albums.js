@@ -6,7 +6,7 @@ class Albums extends Component {
     this.props.Routing("Albums");
   }
   render() {
-    return <div>Albums</div>;
+    return <div>{this.props.routes}</div>;
   }
 }
 const mapStateToProps = state => {
