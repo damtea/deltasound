@@ -19,16 +19,7 @@ class Carousel extends Component {
     ];
     const renderedCarousels = carousels.map(carousel => {
       return (
-        <Segment
-          className="coritem"
-          style={{
-            backgroundImage: `url(${carousel.img})`,
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat"
-          }}
-          textAlign="center"
-        >
+        <Segment className="coritem" textAlign="center" key={carousel}>
           <Container text className="active">
             <Header as="h1">{carousel.title}</Header>
             <p className="para">{carousel.sub}</p>

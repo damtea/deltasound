@@ -85,7 +85,9 @@ class TopBars extends Component {
         </Grid>
         <Grid className="mobile only">
           <Menu inverted borderless size="large" fixed="top">
-            <Menu.Item />
+            <Menu.Item>
+              <Image size="mini" src="logo.png" />{" "}
+            </Menu.Item>
             <Menu.Menu position="right">
               <Menu.Item>
                 <Button

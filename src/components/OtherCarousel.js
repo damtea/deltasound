@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Segment, Header } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 
 class Carousel extends Component {
@@ -7,14 +7,12 @@ class Carousel extends Component {
   render() {
     return (
       <React.Fragment>
-        <Segment inverted vertical textAlign="center">
-          <Container text className="active">
-            <Header inverted as="h1">
-              About
-            </Header>
-            <p />
-          </Container>
-        </Segment>
+        <Segment
+          inverted
+          vertical
+          textAlign="center"
+          style={{ height: "90px" }}
+        />
       </React.Fragment>
     );
   }
