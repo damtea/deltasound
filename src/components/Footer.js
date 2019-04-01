@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Container, Segment, Header, List, Grid } from "semantic-ui-react";
+
 class Footer extends Component {
   render() {
     return (
       <React.Fragment>
-        <Segment inverted vertical style={{ padding: "5em 0em" }}>
+        <Segment inverted vertical style={{ padding: "2em 0em" }}>
           <Container>
             <Grid divided inverted stackable>
               <Grid.Row>
