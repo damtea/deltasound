@@ -30,7 +30,7 @@ class Contact extends Component {
             <Divider vertical />
             <Grid.Row verticalAlign="middle">
               <Grid.Column>
-                <Grid stackable containe columns={3}>
+                <Grid stackable container columns={3}>
                   <Grid.Column />
                   <Grid.Column style={{ width: "400px" }}>
                     <Segment>

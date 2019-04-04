@@ -6,6 +6,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import TopBars from "./components/TopBars";
+import Gallery from "./components/Gallery";
 import "./App.css";
 const ResponsiveContainer = ({ children }) => (
   <div>
@@ -22,6 +23,7 @@ class App extends Component {
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/Albums" exact component={Albums} />
+                <Route path="/Albums/:id" exact component={Gallery} />
                 <Route path="/About" exact component={About} />
                 <Route path="/Contact" exact component={Contact} />
               </Switch>

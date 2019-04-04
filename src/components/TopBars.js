@@ -6,7 +6,8 @@ import {
   Grid,
   Button,
   Icon,
-  Image
+  Image,
+  Visibility
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import { Link } from "react-router-dom";
@@ -22,9 +23,12 @@ class TopBars extends Component {
   state = {
     activeItem: null,
     dropdownMenuStyle: {
-      display: "none"
+      display: "none",
+      fixed: false
     }
   };
+  hideFixedMenu = () => this.setState({ fixed: false });
+  showFixedMenu = () => this.setState({ fixed: true });
   handleToggleDropdownMenu = () => {
     let newState = Object.assign({}, this.state);
     if (newState.dropdownMenuStyle.display === "none") {
@@ -40,7 +44,7 @@ class TopBars extends Component {
   };
 
   renderMenu = activeItem => {
-    const menus = ["Home", "Albums", "Products", "About", "Contact"];
+    const menus = ["Home", "Albums", "Post", "About", "Contact"];
     const renderedMenu = menus.map(menu => {
       return (
         <Menu.Item
@@ -61,70 +65,85 @@ class TopBars extends Component {
 
     return (
       <React.Fragment>
-        <Grid padded className="tablet computer only">
-          <Container>
-            <Menu borderless inverted size="large">
-              <Menu.Item header>
-                <Image size="mini" src="logo.png" />
-              </Menu.Item>
-              {this.renderMenu(activeItem)}
+        <Visibility
+          once={false}
+          onTopPassed={this.showFixedMenu}
+          onTopPassedReverse={this.hideFixedMenu}
+        >
+          <Grid padded className="tablet computer only">
+            <Container>
+              <Menu
+                borderless
+                inverted
+                fixed={this.state.fixed ? "top" : null}
+                size="large"
+              >
+                <Menu.Item header>
+                  <Image size="mini" src="/logo.png" />
+                </Menu.Item>
+                {this.renderMenu(activeItem)}
 
-              <Dropdown text="Dropdown" className="item">
-                <Dropdown.Menu>
-                  <Dropdown.Item as="a">Action</Dropdown.Item>
-                  <Dropdown.Item as="a">Another action</Dropdown.Item>
-                  <Dropdown.Item as="a">Something else here</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Header>Navbar header</Dropdown.Header>
-                  <Dropdown.Item as="a">Seperated link</Dropdown.Item>
-                  <Dropdown.Item as="a">One more seperated link</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Menu>
-          </Container>
-        </Grid>
-        <Grid className="mobile only">
-          <Menu inverted borderless size="large" fixed="top">
-            <Menu.Item>
-              <Image size="mini" src="logo.png" />{" "}
-            </Menu.Item>
-            <Menu.Menu position="right">
+                <Dropdown text="Dropdown" className="item">
+                  <Dropdown.Menu>
+                    <Dropdown.Item as="a">Action</Dropdown.Item>
+                    <Dropdown.Item as="a">Another action</Dropdown.Item>
+                    <Dropdown.Item as="a">Something else here</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Header>Navbar header</Dropdown.Header>
+                    <Dropdown.Item as="a">Seperated link</Dropdown.Item>
+                    <Dropdown.Item as="a">
+                      One more seperated link
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu>
+            </Container>
+          </Grid>
+          <Grid className="mobile only">
+            <Menu inverted borderless size="large" fixed="top">
               <Menu.Item>
-                <Button
-                  icon
-                  basic
-                  inverted
-                  toggle
-                  onClick={this.handleToggleDropdownMenu}
-                >
-                  <Icon name="content" />
-                </Button>
+                <Image size="mini" src="/logo.png" />
               </Menu.Item>
-            </Menu.Menu>
-            <Menu
-              vertical
-              borderless
-              inverted
-              fluid
-              style={this.state.dropdownMenuStyle}
-            >
-              {this.renderMenu(activeItem)}
-              <Dropdown text="Dropdown" className="item">
-                <Dropdown.Menu>
-                  <Dropdown.Item as="a">Action</Dropdown.Item>
-                  <Dropdown.Item as="a">Another action</Dropdown.Item>
-                  <Dropdown.Item as="a">Something else here</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Header>Navbar header</Dropdown.Header>
-                  <Dropdown.Item as="a">Seperated link</Dropdown.Item>
-                  <Dropdown.Item as="a">One more seperated link</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <Menu.Menu position="right">
+                <Menu.Item>
+                  <Button
+                    icon
+                    basic
+                    inverted
+                    toggle
+                    onClick={this.handleToggleDropdownMenu}
+                  >
+                    <Icon name="content" />
+                  </Button>
+                </Menu.Item>
+              </Menu.Menu>
+              <Menu
+                vertical
+                borderless
+                inverted
+                fluid
+                style={this.state.dropdownMenuStyle}
+              >
+                {this.renderMenu(activeItem)}
+                <Dropdown text="Dropdown" className="item">
+                  <Dropdown.Menu>
+                    <Dropdown.Item as="a">Action</Dropdown.Item>
+                    <Dropdown.Item as="a">Another action</Dropdown.Item>
+                    <Dropdown.Item as="a">Something else here</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Header>Navbar header</Dropdown.Header>
+                    <Dropdown.Item as="a">Seperated link</Dropdown.Item>
+                    <Dropdown.Item as="a">
+                      One more seperated link
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu>
             </Menu>
-          </Menu>
-        </Grid>
-        {activeItem === "Home" ? <Carousel /> : <OtherCarousel />}
-        {children}
+          </Grid>
+          {activeItem === "Home" ? <Carousel /> : <OtherCarousel />}
+          {children}
+        </Visibility>
       </React.Fragment>
     );
   }
